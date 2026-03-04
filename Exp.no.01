@@ -1,0 +1,35 @@
+# Caesar Cipher Program
+
+def caesar_encrypt(text, k):
+    result = ""
+    
+    for ch in text:
+        if ch.isalpha():  # Check if character is a letter
+            shift = k % 26
+            
+            if ch.islower():
+                result += chr((ord(ch) - ord('a') + shift) % 26 + ord('a'))
+            else:
+                result += chr((ord(ch) - ord('A') + shift) % 26 + ord('A'))
+        else:
+            result += ch  # Keep spaces and special characters unchanged
+            
+    return result
+
+
+def caesar_decrypt(text, k):
+    return caesar_encrypt(text, -k)
+
+
+# Main Program
+text = input("Enter the message: ")
+k = int(input("Enter shift value (1-25): "))
+
+if 1 <= k <= 25:
+    encrypted = caesar_encrypt(text, k)
+    print("Encrypted Message:", encrypted)
+    
+    decrypted = caesar_decrypt(encrypted, k)
+    print("Decrypted Message:", decrypted)
+else:
+    print("Shift value must be between 1 and 25.")
