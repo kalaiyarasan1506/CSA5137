@@ -1,0 +1,56 @@
+# Monoalphabetic Substitution Cipher Program
+
+import string
+
+# Function to create cipher dictionary from key
+def create_cipher_dict(key):
+    alphabet = string.ascii_lowercase
+    cipher_dict = {}
+
+    for i in range(26):
+        cipher_dict[alphabet[i]] = key[i]
+
+    return cipher_dict
+
+
+# Encryption function
+def encrypt(text, cipher_dict):
+    result = ""
+
+    for ch in text.lower():
+        if ch in cipher_dict:
+            result += cipher_dict[ch]
+        else:
+            result += ch   # keep spaces and special characters unchanged
+
+    return result
+
+
+# Decryption function
+def decrypt(text, cipher_dict):
+    reverse_dict = {v: k for k, v in cipher_dict.items()}
+    result = ""
+
+    for ch in text:
+        if ch in reverse_dict:
+            result += reverse_dict[ch]
+        else:
+            result += ch
+
+    return result
+
+
+# Main Program
+plaintext = input("Enter the message: ")
+key = input("Enter 26-letter substitution key (unique letters only): ")
+
+if len(key) == 26 and len(set(key)) == 26:
+    cipher_dict = create_cipher_dict(key)
+
+    encrypted = encrypt(plaintext, cipher_dict)
+    print("Encrypted Message:", encrypted)
+
+    decrypted = decrypt(encrypted, cipher_dict)
+    print("Decrypted Message:", decrypted)
+else:
+    print("Invalid key! Enter exactly 26 unique letters.")
